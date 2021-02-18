@@ -16,7 +16,7 @@ import os
 
 class Tanks(object):
 	def __init__(self, name):
-		API = '89dd98d7d419d04cf82dea72213d18f6'
+		API = ''
 		resp = requests.get('https://api-console.worldoftanks.com/wotx/account/list/?application_id=' + API + '&search=' + name)
 		wot = resp.json()
 		if wot['meta']['count'] != 1:
@@ -217,9 +217,3 @@ class Tanks(object):
 				json.dump(loadData, f)
 		else:
 			pass
-#ADMI-660
-me = Tanks('graff_gss')
-if me.status() == False:
-	print(me.info())
-else:
-	print('Ошибка, пользователь не найден!')
