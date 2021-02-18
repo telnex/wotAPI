@@ -48,7 +48,7 @@ class Tanks(object):
 		elif data == 'hits':
 			return loadData['hits_d']
 		elif data == 'piercing':
-			return loadData['piercing_d']
+			return loadData['piercings_d']
 		elif data == 'spotted':
 			return loadData['spotted_d']
 		elif data == 'damage':
@@ -61,8 +61,10 @@ class Tanks(object):
 			return loadData['wins_d']
 		elif data == 'losses':
 			return loadData['losses_d']
-		else:
+		elif data == 'date':
 			return loadData['update_day']
+		else:
+			return 0
 
 	def sWeek(self, data):
 		with open('./dataUser/' + self.id + '_data.json', 'r') as f:
@@ -72,7 +74,7 @@ class Tanks(object):
 		elif data == 'hits':
 			return loadData['hits_w']
 		elif data == 'piercing':
-			return loadData['piercing_w']
+			return loadData['piercings_w']
 		elif data == 'spotted':
 			return loadData['spotted_w']
 		elif data == 'damage':
@@ -85,8 +87,10 @@ class Tanks(object):
 			return loadData['wins_w']
 		elif data == 'losses':
 			return loadData['losses_w']
-		else:
+		elif data == 'date':
 			return loadData['update_week']
+		else:
+			return 0
 
 	def sMonth(self, data):
 		with open('./dataUser/' + self.id + '_data.json', 'r') as f:
@@ -96,7 +100,7 @@ class Tanks(object):
 		elif data == 'hits':
 			return loadData['hits_m']
 		elif data == 'piercing':
-			return loadData['piercing_m']
+			return loadData['piercings_m']
 		elif data == 'spotted':
 			return loadData['spotted_m']
 		elif data == 'damage':
@@ -109,9 +113,10 @@ class Tanks(object):
 			return loadData['wins_m']
 		elif data == 'losses':
 			return loadData['losses_m']
+		elif data == 'date':
+			return loadData['update_mounth']
 		else:
-			return loadData['update_month']
-
+			return 0
 	def updateFirst(self):
 		loadData = {}
 		# day
