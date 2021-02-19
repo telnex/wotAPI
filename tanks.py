@@ -19,7 +19,7 @@ class Tanks(object):
 		API = ''
 		resp = requests.get('https://api-console.worldoftanks.com/wotx/account/list/?application_id=' + API + '&search=' + name)
 		wot = resp.json()
-		if wot['meta']['count'] != 1:
+		if wot['meta']['count'] == 0:
 			self.error = True
 		else:
 			self.error = False
@@ -32,6 +32,17 @@ class Tanks(object):
 			self.updateDay()
 			self.updateWeek()
 			self.updateMonths()
+
+	def delStat(self):
+		if os.path.exists('./dataUser/' + self.id + '_data.json') == True:
+			os.remove('./dataUser/' + self.id + '_data.json')
+	
+	def getList(self):
+		files = os.listdir('./dataUser/')
+		for x in range(0,len(files)):
+			listName = files[x] 
+			files[x] = listName[:9]
+		self.list = files
 
 	def status(self):
 		return self.error
@@ -117,6 +128,7 @@ class Tanks(object):
 			return loadData['update_mounth']
 		else:
 			return 0
+
 	def updateFirst(self):
 		loadData = {}
 		# day
@@ -165,16 +177,16 @@ class Tanks(object):
 			loadData = json.load(f)
 		day = round((time.time() - loadData['update_day']) / (60*60))
 		if day > 24:
-			loadData['battles_d'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles']
-			loadData['frags_d'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags']
-			loadData['wins_d'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins']
-			loadData['losses_d'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses']
+			loadData['battles_d'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles_d']
+			loadData['frags_d'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags_d']
+			loadData['wins_d'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins_d']
+			loadData['losses_d'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses_d']
 
-			loadData['xp_d'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp']
-			loadData['hits_d'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits']
-			loadData['piercings_d'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings']
-			loadData['spotted_d'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted']
-			loadData['damage_dealt_d'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt']
+			loadData['xp_d'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp_d']
+			loadData['hits_d'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits_d']
+			loadData['piercings_d'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings_d']
+			loadData['spotted_d'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted_d']
+			loadData['damage_dealt_d'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt_d']
 			loadData['update_day'] = time.time()
 			with open('./dataUser/' + self.id + '_data.json', 'w') as f:
 				json.dump(loadData, f)
@@ -186,16 +198,16 @@ class Tanks(object):
 			loadData = json.load(f)
 		week = round((time.time() - loadData['update_week']) / (60*60*24))
 		if week > 7:
-			loadData['battles_w'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles']
-			loadData['frags_w'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags']
-			loadData['wins_w'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins']
-			loadData['losses_w'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses']
+			loadData['battles_w'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles_w']
+			loadData['frags_w'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags_w']
+			loadData['wins_w'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins_w']
+			loadData['losses_w'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses_w']
 
-			loadData['xp_w'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp']
-			loadData['hits_w'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits']
-			loadData['piercings_w'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings']
-			loadData['spotted_w'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted']
-			loadData['damage_dealt_w'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt']
+			loadData['xp_w'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp_w']
+			loadData['hits_w'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits_w']
+			loadData['piercings_w'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings_w']
+			loadData['spotted_w'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted_w']
+			loadData['damage_dealt_w'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt_w']
 			loadData['update_week'] = time.time()
 			with open('./dataUser/' + self.id + '_data.json', 'w') as f:
 				json.dump(loadData, f)
@@ -207,16 +219,16 @@ class Tanks(object):
 			loadData = json.load(f)
 		week = round((time.time() - loadData['update_months']) / (60*60*24))
 		if week > 7:
-			loadData['battles_m'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles']
-			loadData['frags_m'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags']
-			loadData['wins_m'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins']
-			loadData['losses_m'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses']
+			loadData['battles_m'] = self.data['data'][self.id]['statistics']['all']['battles'] - loadData['battles_m']
+			loadData['frags_m'] = self.data['data'][self.id]['statistics']['all']['frags'] - loadData['frags_m']
+			loadData['wins_m'] = self.data['data'][self.id]['statistics']['all']['wins'] - loadData['wins_m']
+			loadData['losses_m'] = self.data['data'][self.id]['statistics']['all']['losses'] - loadData['losses_m']
 
-			loadData['xp_m'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp']
-			loadData['hits_m'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits']
-			loadData['piercings_m'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings']
-			loadData['spotted_m'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted']
-			loadData['damage_dealt_m'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt']
+			loadData['xp_m'] = self.data['data'][self.id]['statistics']['all']['xp'] - loadData['xp_m']
+			loadData['hits_m'] = self.data['data'][self.id]['statistics']['all']['hits'] - loadData['hits_m']
+			loadData['piercings_m'] = self.data['data'][self.id]['statistics']['piercings'] - loadData['piercings_m']
+			loadData['spotted_m'] = self.data['data'][self.id]['statistics']['all']['spotted'] - loadData['spotted_m']
+			loadData['damage_dealt_m'] = self.data['data'][self.id]['statistics']['all']['damage_dealt'] - loadData['damage_dealt_m']
 			loadData['update_months'] = time.time()
 			with open('./dataUser/' + self.id + '_data.json', 'w') as f:
 				json.dump(loadData, f)
