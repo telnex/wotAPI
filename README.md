@@ -21,5 +21,5 @@ the total damage done and the experience gained.
     print(user.sDay('xp')) # Полученный опыт за сутки
     print(user.sWeek('wins')) # Побед за неделю
   else:
-    print('Ошибка, пользователь не найден!')>
+    print('Ошибка, пользователь не найден!')
  ```
