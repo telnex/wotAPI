@@ -17,7 +17,7 @@ the total damage done and the experience gained.
 **Пример вызова:**
 ```Python
   user = Tanks('graff_gss')
-  if user.status() == False:
+  if user.status():
     print(user.sDay('xp')) # Полученный опыт за сутки
     print(user.sWeek('wins')) # Побед за неделю
   else:
